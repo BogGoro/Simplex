@@ -2,20 +2,20 @@
 
 ### Input:
 
-n // number of constraints
-c_1 c_2 ... c_m // coefficients of objective function
-c_1_1 c_1_2 ... c_1_m // coefficients of constraint function
-c_2_1 c_2_2 ... c_2_m // coefficients of constraint function
-.
-.
-.
-c_n_1 c_n_2 ... c_n_m // coefficients of constraint function
-b_1 b_2 ... b_n // Right-Hand side numbers
+n // number of constraints <br />
+c_1 c_2 ... c_m // coefficients of objective function <br />
+c_1_1 c_1_2 ... c_1_m // coefficients of constraint function <br />
+c_2_1 c_2_2 ... c_2_m // coefficients of constraint function <br />
+. <br />
+. <br />
+. <br />
+c_n_1 c_n_2 ... c_n_m // coefficients of constraint function <br />
+b_1 b_2 ... b_n // Right-Hand side numbers <br />
 epsilon // approximation accuracy
 
 ### Output:
 
-[x_1, x_2, ... x_m] // A vector of decision variables
+[x_1, x_2, ... x_m] // A vector of decision variables <br />
 maxval // maximum value of the objective function
 
 or
