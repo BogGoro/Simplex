@@ -1,11 +1,18 @@
 from typing import List
 
 def solve_with_simplex(num_constraints: int, c: List[float], A: List[List[float]], b: List[float], epsilon: float):
+    if sum( x < 0 for x in b) > 0:
+        print("The method is not applacable!")
+        exit(0)
+
     num_vars = len(A[0])
     tableau = []
 
     # creating initial tableu by adding constraints with slack variables and RHS
-    tableau = [row[:] + [0] * num_constraints + [b[i]] for i, row in enumerate(A)]
+    tableau = [
+        row[:] + [0] * num_constraints + [b[i]]
+        for i, row in enumerate(A)
+        ]
 
     # Add the objective function row with slack variables and RHS
     tableau.insert(0, [-c[j] for j in range(num_vars)] + [0] * (num_constraints + 1))
@@ -25,11 +32,14 @@ def solve_with_simplex(num_constraints: int, c: List[float], A: List[List[float]
 
         # If no positive entry in the pivot column, the problem is unbounded
         if all(row[pivot_col] <= epsilon for row in tableau[1:]):
-            print("Method is unapplicable")
+            print("The method is not applacable!")
             exit(0)
 
         # Choose the leaving variable
-        ratios = [(tableau[i][-1] / tableau[i][pivot_col], i) for i in range(1, num_constraints + 1) if tableau[i][pivot_col] > epsilon]
+        ratios = [
+            (tableau[i][-1] / tableau[i][pivot_col], i)
+            for i in range(1, num_constraints + 1) if tableau[i][pivot_col] > epsilon
+            ]
         pivot_row = min(ratios)[1]
 
         # Perform the pivot
@@ -44,7 +54,8 @@ def solve_with_simplex(num_constraints: int, c: List[float], A: List[List[float]
 
     solution = [0] * num_vars
     for i in range(num_vars):
-        if sum(-epsilon < tableau[j][i] < epsilon for j in range(len(tableau))) == num_constraints and sum(1 - epsilon < tableau[j][i] < 1 + epsilon for j in range(len(tableau))) == 1:
+        if sum(-epsilon < tableau[j][i] < epsilon for j in range(len(tableau))) == num_constraints and \
+            sum(1 - epsilon < tableau[j][i] < 1 + epsilon for j in range(len(tableau))) == 1:
             variable_row = sum(j if (1 - epsilon < tableau[j][i] < 1 + epsilon) else 0 for j in range(len(tableau)))
             solution[i] = tableau[variable_row][-1]
 
